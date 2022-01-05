@@ -1,0 +1,24 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Topics</h1>
+
+<div id="topics">
+  <% @topics.each do |topic| %>
+    <%= render topic %>
+    <p>
+      <%= link_to "Show this topic", topic %>
+    </p>
+  <% end %>
+</div>
+
+<% @topics.sort_by {|topic| -topic.votes.count}.each do |topic| %>
+  <tr>
+    <td><%= link_to "topic.title", topic %></td>
+    <td><%= pluralize(topic.votes.count, "vote") %></td>
+    <td><%= button_to '+1', upvote_topic_path(topic), method: :post %></td>
+    <td><%= button_to '-1', downvote_topic_path(topic), method: :post %></td>
+    <td><%= link_to "Delete", topic, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  <tr>
+<% end %>
+<%= link_to "New topic", new_topic_path %>
+<%= link_to 'About', about_path %>
